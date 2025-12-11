@@ -10,7 +10,7 @@ namespace CodeJam5b.Server.Data
         {
         }
         public DbSet<Meal> Meals { get; set; }
-        public DbSet<Progress> Progress { get; set; }
+        public DbSet<UserProgress> Progress { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -49,8 +49,8 @@ namespace CodeJam5b.Server.Data
 
              );
 
-            modelBuilder.Entity<Progress>().HasData(
-                new Progress 
+            modelBuilder.Entity<UserProgress>().HasData(
+                new UserProgress 
                 { 
                     ProgressId = "1",
                     CurrentWeight = 180,

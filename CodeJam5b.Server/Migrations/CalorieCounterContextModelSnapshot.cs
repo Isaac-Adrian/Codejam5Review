@@ -82,7 +82,7 @@ namespace CodeJam5b.Server.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CodeJam5b.Models.Progress", b =>
+            modelBuilder.Entity("CodeJam5b.Models.UserProgress", b =>
                 {
                     b.Property<string>("ProgressId")
                         .HasColumnType("text")

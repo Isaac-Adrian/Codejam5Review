@@ -1,82 +1,138 @@
 using Microsoft.AspNetCore.Mvc;
-using CodeJam5b.Server.Models;
-using CodeJam5b.Server.Mapping;
+using CodeJam5b.Models;
 using CodeJam5b.Server.Data;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace CodeJam5b.Server.Controllers
 {
+    public class MealEntry
+    {
+        public string? Id { get; set; }
+        
+        [Required(ErrorMessage = "Name is required")]
+        public string Name { get; set; } = "";
+        
+        [Range(0, 10000, ErrorMessage = "Calories must be between 0 and 10000")]
+        public int Calories { get; set; }
+        
+        [Range(0, 1000, ErrorMessage = "Carbs must be between 0 and 1000")]
+        public int Carbs { get; set; }
+        
+        [Range(0, 1000, ErrorMessage = "Fat must be between 0 and 1000")]
+        public int Fat { get; set; }
+        
+        [Range(0, 1000, ErrorMessage = "Protein must be between 0 and 1000")]
+        public int Protein { get; set; }
+    }
+
     [ApiController]
     [Route("api/meals")]
     public class CalorieCounterController : ControllerBase
     {
-        private readonly AppDb _db;
-        public CalorieCounterController(AppDb db) { _db = db; }
+        private readonly CalorieCounterContext _db;
+        public CalorieCounterController(CalorieCounterContext db) { _db = db; }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MealEntry>>> GetAll([FromQuery] string? date)
+        public async Task<ActionResult<IEnumerable<MealEntry>>> GetAll()
         {
-            IQueryable<Data.MealEntity> q = _db.Meals;
-            if (!string.IsNullOrWhiteSpace(date))
+            var meals = await _db.Meals.ToListAsync();
+            return meals.Select(m => new MealEntry
             {
-                var d = DateOnly.Parse(date);
-                q = q.Where(m => m.Date == d);
-            }
-            var list = await q.OrderByDescending(m => m.Date).ToListAsync();
-            return list.Select(Map.ToDto).ToList();
+                Id = m.MealId,
+                Name = m.MealName,
+                Calories = m.Calories,
+                Carbs = m.Carbs,
+                Fat = m.Fat,
+                Protein = m.Protein
+            }).ToList();
         }
 
-        [HttpGet("{id:int}")]
-        public async Task<ActionResult<MealEntry>> GetById(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<MealEntry>> GetById(string id)
         {
-            var entity = await _db.Meals.FindAsync(id);
-            return entity is null ? NotFound() : Map.ToDto(entity);
+            var meal = await _db.Meals.FindAsync(id);
+            if (meal is null) return NotFound();
+            
+            return new MealEntry
+            {
+                Id = meal.MealId,
+                Name = meal.MealName,
+                Calories = meal.Calories,
+                Carbs = meal.Carbs,
+                Fat = meal.Fat,
+                Protein = meal.Protein
+            };
         }
 
         [HttpPost]
         public async Task<ActionResult<MealEntry>> Create(MealEntry body)
         {
-            var entity = Map.ToEntity(body);
-            _db.Meals.Add(entity);
+            var meal = new Meal
+            {
+                MealId = Guid.NewGuid().ToString(),
+                MealName = body.Name,
+                Calories = body.Calories,
+                Carbs = body.Carbs,
+                Fat = body.Fat,
+                Protein = body.Protein
+            };
+            
+            _db.Meals.Add(meal);
             await _db.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetById), new { id = entity.Id }, Map.ToDto(entity));
+            
+            body.Id = meal.MealId;
+            return CreatedAtAction(nameof(GetById), new { id = meal.MealId }, body);
         }
 
-        [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update(int id, MealEntry body)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(string id, MealEntry body)
         {
-            var entity = await _db.Meals.FindAsync(id);
-            if (entity is null) return NotFound();
-            var updated = Map.ToEntity(body);
-            entity.Name = updated.Name;
-            entity.Calories = updated.Calories;
-            entity.Carbs = updated.Carbs;
-            entity.Fat = updated.Fat;
-            entity.Protein = updated.Protein;
-            entity.Date = updated.Date;
+            var meal = await _db.Meals.FindAsync(id);
+            if (meal is null) return NotFound();
+            
+            meal.MealName = body.Name;
+            meal.Calories = body.Calories;
+            meal.Carbs = body.Carbs;
+            meal.Fat = body.Fat;
+            meal.Protein = body.Protein;
+            
             await _db.SaveChangesAsync();
             return NoContent();
         }
 
-        [HttpDelete("{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
         {
-            var entity = await _db.Meals.FindAsync(id);
-            if (entity is null) return NotFound();
-            _db.Meals.Remove(entity);
+            var meal = await _db.Meals.FindAsync(id);
+            if (meal is null) return NotFound();
+            
+            _db.Meals.Remove(meal);
             await _db.SaveChangesAsync();
             return NoContent();
         }
 
         [HttpGet("summary")]
-        public async Task<ActionResult<object>> Summary([FromQuery] string date)
+        public async Task<ActionResult<object>> Summary()
         {
-            var d = DateOnly.Parse(date);
-            var items = await _db.Meals.Where(m => m.Date == d).ToListAsync();
-            var totals = new { totalCalories = items.Sum(e => e.Calories), totalCarbs = items.Sum(e => e.Carbs), totalFat = items.Sum(e => e.Fat), totalProtein = items.Sum(e => e.Protein) };
-            var progress = await _db.Progress.FindAsync(1);
+            var meals = await _db.Meals.ToListAsync();
+            var progress = await _db.Progress.FirstOrDefaultAsync();
+            
+            var totalCalories = meals.Sum(m => m.Calories);
+            var totalCarbs = meals.Sum(m => m.Carbs);
+            var totalFat = meals.Sum(m => m.Fat);
+            var totalProtein = meals.Sum(m => m.Protein);
             var targetCals = progress?.TargetCals ?? 0;
-            return new { date, totals.totalCalories, totals.totalCarbs, totals.totalFat, totals.totalProtein, targetCals, remaining = targetCals > 0 ? targetCals - totals.totalCalories : 0 };
+            
+            return new
+            {
+                totalCalories,
+                totalCarbs,
+                totalFat,
+                totalProtein,
+                targetCals,
+                remaining = targetCals > 0 ? targetCals - totalCalories : 0
+            };
         }
     }
 }

@@ -3,7 +3,7 @@
 "ServerUrl": "https://localhost:63613",
 "RedirectUrl": "",
 "LaunchCommand": "npm run dev",
-"WorkingDirectory": "C:\\Users\\jmfefoe\\OneDrive - JM Family Enterprises\\ITSAcademyProj\\CodeJam5b\\Codejam5\\CodeJam5b.Server\\..\\codejam5b.client",
+"WorkingDirectory": "C:\\Users\\jmfaryl\\Codejam5-1\\CodeJam5b.Server\\..\\codejam5b.client",
 "MaxTimeoutInSeconds": "120",
 "KeepRunning": "false"
 }

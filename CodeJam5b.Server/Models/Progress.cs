@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace CodeJam5b.Models
 {
     [Table("progress")]
-    public class Progress
+    public class UserProgress
     {
         [Key]
         [Column("progress_id")]
