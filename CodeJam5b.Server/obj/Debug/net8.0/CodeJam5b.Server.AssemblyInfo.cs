@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CodeJam5b.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6b8430dfd1c63d1c7ce8f762d49ed01a579d3a8d")]
 [assembly: System.Reflection.AssemblyProductAttribute("CodeJam5b.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CodeJam5b.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

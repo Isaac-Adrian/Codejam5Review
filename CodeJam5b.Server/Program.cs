@@ -1,4 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+using CodeJam5b.Server.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<CalorieCounterContext>(options => 
+options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 

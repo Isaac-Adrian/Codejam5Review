@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jmfefoe\\OneDrive - JM Family Enterprises\\ITSAcademyProj\\CodeJam5b\\CodeJam5b.Server\\CodeJam5b.Server.csproj": {}
+    "C:\\Users\\jmfefoe\\OneDrive - JM Family Enterprises\\ITSAcademyProj\\CodeJam5b\\Codejam5\\CodeJam5b.Server\\CodeJam5b.Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jmfefoe\\OneDrive - JM Family Enterprises\\ITSAcademyProj\\CodeJam5b\\CodeJam5b.Server\\CodeJam5b.Server.csproj": {
+    "C:\\Users\\jmfefoe\\OneDrive - JM Family Enterprises\\ITSAcademyProj\\CodeJam5b\\Codejam5\\CodeJam5b.Server\\CodeJam5b.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jmfefoe\\OneDrive - JM Family Enterprises\\ITSAcademyProj\\CodeJam5b\\CodeJam5b.Server\\CodeJam5b.Server.csproj",
+        "projectUniqueName": "C:\\Users\\jmfefoe\\OneDrive - JM Family Enterprises\\ITSAcademyProj\\CodeJam5b\\Codejam5\\CodeJam5b.Server\\CodeJam5b.Server.csproj",
         "projectName": "CodeJam5b.Server",
-        "projectPath": "C:\\Users\\jmfefoe\\OneDrive - JM Family Enterprises\\ITSAcademyProj\\CodeJam5b\\CodeJam5b.Server\\CodeJam5b.Server.csproj",
+        "projectPath": "C:\\Users\\jmfefoe\\OneDrive - JM Family Enterprises\\ITSAcademyProj\\CodeJam5b\\Codejam5\\CodeJam5b.Server\\CodeJam5b.Server.csproj",
         "packagesPath": "C:\\Users\\jmfefoe\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jmfefoe\\OneDrive - JM Family Enterprises\\ITSAcademyProj\\CodeJam5b\\CodeJam5b.Server\\obj\\",
+        "outputPath": "C:\\Users\\jmfefoe\\OneDrive - JM Family Enterprises\\ITSAcademyProj\\CodeJam5b\\Codejam5\\CodeJam5b.Server\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -53,6 +53,26 @@
             "Microsoft.AspNetCore.SpaProxy": {
               "target": "Package",
               "version": "[8.*-*, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.22, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.22, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.22, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.11, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
