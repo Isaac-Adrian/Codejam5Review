@@ -8,6 +8,7 @@ function SearchMeal() {
   const [error, setError] = useState(null);
   const [addingMealId, setAddingMealId] = useState(null);
 
+  //progress stats do not refresh until refresh. Should use state maybe but im no expert
   const handleAddMeal = async (meal) => {
     setAddingMealId(meal.mealId);
     
@@ -151,5 +152,6 @@ function SearchMeal() {
     </div>
   );
 }
+//Again I think some of this should be made into subcomponents to make more readable, extensible, and reusable (Example, results container)
 
 export default SearchMeal;

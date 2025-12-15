@@ -158,5 +158,9 @@ function ProgressView() {
     </div>
   );
 }
+/*This specific component suffers a little form the pyramid of death. Seems as if some of this functionality could be split into other components.
+For a specific example I would recommend a target item component (as it is something that is being repeate often) that takes in target type, current, goal, and unit. 
+This would also make it extensible for things like vitamins, fiber or other dietary things
+*/
 
 export default ProgressView;

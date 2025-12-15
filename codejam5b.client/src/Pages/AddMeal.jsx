@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './AddMeal.css';
 
+//Cool that it saves meal and adds to daily progress
 function AddMeal() {
   const [mealData, setMealData] = useState({
     name: '',

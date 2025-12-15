@@ -140,6 +140,7 @@ namespace CodeJam5b.Server.Controllers
             return NoContent();
         }
 
+        //Cool CRUD ops but not used anywgere. This summary one specifically seems like it should be used
         [HttpGet("summary")]
         public async Task<ActionResult<object>> Summary()
         {

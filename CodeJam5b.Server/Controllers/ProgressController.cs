@@ -58,7 +58,7 @@ namespace CodeJam5b.Server.Controllers
             if (progress is null) return NotFound();
             
             // Reset consumed values if it's a new day
-            var today = DateTime.UtcNow.Date;
+            var today = DateTime.UtcNow.Date; //seems like this should be localTime for a user
             if (progress.LastUpdated.Date != today)
             {
                 progress.ConsumedCalories = 0;
